@@ -1,0 +1,142 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Url
+ *
+ * @ORM\Table(name="url")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UrlRepository")
+ */
+class Url
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="resume", type="string", length=255)
+     */
+    private $resume;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MotCle", mappedBy="url")
+     */
+    private $motsCles;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Url
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set resume
+     *
+     * @param string $resume
+     *
+     * @return Url
+     */
+    public function setResume($resume)
+    {
+        $this->resume = $resume;
+
+        return $this;
+    }
+
+    /**
+     * Get resume
+     *
+     * @return string
+     */
+    public function getResume()
+    {
+        return $this->resume;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->motsCles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add motsCle
+     *
+     * @param \AppBundle\Entity\MotCle $motsCle
+     *
+     * @return Url
+     */
+    public function addMotsCle(\AppBundle\Entity\MotCle $motsCle)
+    {
+        $this->motsCles[] = $motsCle;
+
+        return $this;
+    }
+
+    /**
+     * Remove motsCle
+     *
+     * @param \AppBundle\Entity\MotCle $motsCle
+     */
+    public function removeMotsCle(\AppBundle\Entity\MotCle $motsCle)
+    {
+        $this->motsCles->removeElement($motsCle);
+    }
+
+    /**
+     * Get motsCles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMotsCles()
+    {
+        return $this->motsCles;
+    }
+}
