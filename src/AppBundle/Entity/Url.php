@@ -37,7 +37,7 @@ class Url
 
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MotCle", mappedBy="url", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MotCle", mappedBy="url", cascade={"persist"}, orphanRemoval=true)
      */
     private $motsCles;
 

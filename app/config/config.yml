@@ -10,7 +10,7 @@ parameters:
 
 framework:
     #esi: ~
-    #translator: { fallbacks: ['%locale%'] }
+    translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
     router:
         resource: '%kernel.project_dir%/app/config/routing.yml'
@@ -74,10 +74,16 @@ easy_admin:
     entities:
         Url:
             class: AppBundle\Entity\Url
+            controller: AppBundle\Controller\TestController
+            templates:
+                list: 'easy/url/list.html.twig'
+            list:
+                actions:
+                    - { name: test, type: route, label: 'test'}
             edit:
                 fields:
                     - { property: title, label: 'titre' }
                     - { property: resume, label: 'résumé' }
-                    - { property: motsCles, type: 'collection', type_options: { entry_type: AppBundle\Form\MotCleType, allow_delete: true, allow_add: true, by_reference: false } }
+                    - { property: motsCles, type: 'collection', type_options: { entry_type: AppBundle\Form\MotCleType, allow_delete: true, allow_add: true, by_reference: false, action: '-delete' } }
         MotCle:
             class: AppBundle\Entity\MotCle
