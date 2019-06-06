@@ -2,7 +2,9 @@
 
 namespace AppBundle\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * Url
@@ -40,6 +42,17 @@ class Url
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\MotCle", mappedBy="url", cascade={"persist"}, orphanRemoval=true)
      */
     private $motsCles;
+
+    /**
+     * @var Perimeters
+     *
+     * @ORM\ManyToOne(targetEntity="Perimeters", inversedBy="url")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="perimeter", referencedColumnName="id", nullable=true)
+     * })
+     */
+    protected $perimeter;
+
 
     /**
      * Get id
@@ -142,5 +155,29 @@ class Url
 
     public function __toString(){
         return $this->title;
+    }
+
+    /**
+     * Set perimeter
+     *
+     * @param \AppBundle\Entity\Perimeters $perimeter
+     *
+     * @return Url
+     */
+    public function setPerimeter(\AppBundle\Entity\Perimeters $perimeter = null)
+    {
+        $this->perimeter = $perimeter;
+
+        return $this;
+    }
+
+    /**
+     * Get perimeter
+     *
+     * @return \AppBundle\Entity\Perimeters
+     */
+    public function getPerimeter()
+    {
+        return $this->perimeter;
     }
 }

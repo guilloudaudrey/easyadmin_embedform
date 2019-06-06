@@ -1,11 +1,6 @@
 {% extends '@EasyAdmin/default/list.html.twig' %}
 
- {% block item_actions %}
-     <button type="button" class="open-AddBookDialog btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-id="{{ item.id }}">
-         Test
-     </button>
-     {% include 'easy/url/modalTest.html.twig' %}
-{% endblock %}
+
 
 {% block body_javascript %}
     {{ parent() }}

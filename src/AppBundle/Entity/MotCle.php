@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,10 +31,11 @@ class MotCle
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Url", inversedBy="motsCles", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Url", inversedBy="motsCle", cascade={"persist"})
      * @ORM\JoinColumn(name="url_id", referencedColumnName="id")
      */
     private $url;
+
 
     /**
      * Get id
@@ -92,6 +94,7 @@ class MotCle
     {
         return $this->url;
     }
+
 
     public function __toString(){
         return $this->word;

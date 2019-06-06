@@ -79,11 +79,16 @@ easy_admin:
                 list: 'easy/url/list.html.twig'
             list:
                 actions:
+                    - edit
                     - { name: test, type: route, label: 'test'}
             edit:
                 fields:
                     - { property: title, label: 'titre' }
                     - { property: resume, label: 'résumé' }
+                    - { property: perimeter, label: 'périmètre' }
                     - { property: motsCles, type: 'collection', type_options: { entry_type: AppBundle\Form\MotCleType, allow_delete: true, allow_add: true, by_reference: false, action: '-delete' } }
         MotCle:
             class: AppBundle\Entity\MotCle
+
+        Perimeters:
+            class: AppBundle\Entity\Perimeters
