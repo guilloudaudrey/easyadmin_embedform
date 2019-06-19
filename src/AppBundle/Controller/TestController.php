@@ -36,12 +36,12 @@ class TestController extends AdminController
             if ($fieldId == 'perimeter') {
                 $options = [
                     'class'    => 'AppBundle\Entity\Perimeters',
+                    'group_by' => 'Perimeter'
                 ];
                 $options['query_builder'] = function (EntityRepository $er) {
                     $qb = $er->createQueryBuilder('p');
 
                     return $qb->select('p')
-                        ->where('p.perimeter is null')
                         ->addSelect('pc')
                         ->leftJoin('p.children', 'pc')
                         ->addSelect('pcpc')

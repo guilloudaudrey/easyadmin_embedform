@@ -1,24 +1,45 @@
 {% extends '@EasyAdmin/default/list.html.twig' %}
 
 
+{% block main %}
+
+    {{ parent() }}
+    <select id="myselecet">
+        <option value="1">aaaaaaaa</option>
+        <option value="2">bbbbbbbb</option>
+        <option value="3">-- ccccccccc</option>
+        <option value="4">-- dddddddddd</option>
+        <option value="5">eeeeeeeeee</option>
+        <option value="6">-- ffffffffff</option>
+    </select>
+{% endblock %}
 
 {% block body_javascript %}
     {{ parent() }}
 
     <script type="text/javascript">
+        $(document).ready(function(){
+            let options = document.getElementById('myselecet').options;
 
-        $(document).on("click", ".open-AddBookDialog", function () {
+            let array = new Array();
 
-            var text = "";
+            for (let i = 0; i < options.length; i++){
+                if (!options[i].text.includes('--')){
+                    array[i] =  new Array(options[i].value);
 
-            var myBookId = $(this).data('id');
+                } else {
+                    for (let j=0; j<array.length; j++ ){
+                        array
+                        console.log(options[i].value);
 
-            var url = '{{ path("test", {'id': 'article_id'}) }}';
-            url = url.replace("article_id", myBookId);
-            text += '<a href='+ url +'>article</a>';
+                    }
 
-            document.getElementById("result").innerHTML = text;
+                }
+            }
+            console.log(array)
+
         });
+
 
     </script>
 
