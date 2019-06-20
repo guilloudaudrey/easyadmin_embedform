@@ -1,0 +1,72 @@
+{% extends "@EasyAdmin/form/bootstrap_3_horizontal_layout.html.twig" %}
+
+{% block item_actions %}
+    {% set _translation_domain = easyadmin.entity.translation_domain %}
+    {% set _trans_parameters = { '%entity_name%':  easyadmin.entity.name|trans, '%entity_label%': easyadmin.entity.label|trans } %}
+
+    {# the 'save' action is hardcoded for the 'edit' and 'new' views #}
+    {{ dump(easyadmin.view) }}
+    {{ dump(easyadmin.entity.name|trans) }}
+    {% if easyadmin.view == 'edit' and easyadmin.entity.name == 'Url' %}
+    <button type="submit" class="btn btn-primary action-save">
+         {{ 'action.save'|trans(_trans_parameters, _translation_domain) }}
+    </button>
+    {% endif %}
+
+    {% set _entity_actions = (easyadmin.view == 'new')
+        ? easyadmin_get_actions_for_new_item(easyadmin.entity.name)
+        : easyadmin_get_actions_for_edit_item(easyadmin.entity.name) %}
+
+    {% set _entity_id = (easyadmin.view == 'new')
+        ? null
+        : attribute(easyadmin.item, easyadmin.entity.primary_key_field_name) %}
+
+    {% set _request_parameters = { entity: easyadmin.entity.name, referer: app.request.query.get('referer') } %}
+
+    {{ include('@EasyAdmin/default/includes/_actions.html.twig', {
+        actions: _entity_actions,
+        request_parameters: _request_parameters,
+        translation_domain: _translation_domain,
+        trans_parameters: _trans_parameters,
+        item_id: _entity_id
+    }, with_context = false) }}
+{% endblock item_actions %}
+
+{% block collection_row %}
+    {{ block('form_row') }}
+
+    {% if allow_add|default(false) %}
+        {% set js_add_item %}
+            $(function() {
+            if (event.preventDefault) event.preventDefault(); else event.returnValue = false;
+
+            var collection = $('#{{ id }}');
+            // Use a counter to avoid having the same index more than once
+            var numItems = collection.data('count') || collection.children('div.form-group').length+1;
+
+            collection.prev('.collection-empty').remove();
+
+            var newItem = collection.attr('data-prototype')
+            .replace(/\>{{ prototype.vars.name }}label__\</g, '>' + numItems + '<')
+            .replace(/_{{ name }}_{{ prototype.vars.name }}/g, '_{{ name }}_' + numItems)
+            .replace(/{{ name }}\]\[{{ prototype.vars.name }}\]/g, '{{ name }}][' + numItems + ']')
+            ;
+
+            // Increment the counter and store it in the collection
+            collection.data('count', ++numItems);
+
+            collection.append(newItem).trigger('easyadmin.collection.item-added');
+            });
+        {% endset %}
+
+        {{ dump(easyadmin.field.fieldName) }}
+        <div class="text-right field-collection-action">
+            {% if easyadmin.field.fieldName == 'motsCles' %}
+            <a href="#" onclick="{{ js_add_item|raw }}" class="text-primary">
+                <i class="fa fa-plus-square"></i>
+                Ajouter un nouveau mot-clé
+            </a>
+                {% endif %}
+        </div>
+    {% endif %}
+{% endblock collection_row %}

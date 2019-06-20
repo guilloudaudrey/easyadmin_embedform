@@ -71,6 +71,8 @@ sensio_framework_extra:
         annotations: false
 
 easy_admin:
+    design:
+        form_theme: 'easy/url/bootstrap_3_horizontal_layout.html.twig'
     entities:
         Url:
             class: AppBundle\Entity\Url

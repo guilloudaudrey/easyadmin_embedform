@@ -19,23 +19,23 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-            let options = document.getElementById('myselecet').options;
+            var options = document.getElementById('myselecet').options;
 
-            let array = new Array();
+var array = new Array();
 
-            for (let i = 0; i < options.length; i++){
-                if (!options[i].text.includes('--')){
-                    array[i] =  new Array(options[i].value);
+            for (var i = 0; i < options.length; i++) {
+                if (!options[i].text.includes('--')) {
+                    array[i] = new Array(options[i].text);
 
-                } else {
-                    for (let j=0; j<array.length; j++ ){
-                        array
-                        console.log(options[i].value);
+
+                    for (var j = 0; j < array.length; j++) {
+                            array[i][j] = new Array(options[i].text)
 
                     }
 
                 }
             }
+
             console.log(array)
 
         });
